@@ -1,14 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import dynamic from 'next/dynamic';
-
-const BookViewer = dynamic(() => import('@/components/BookViewer'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex items-center justify-center h-64 text-stone-400 text-sm">
-      Lädt…
-    </div>
-  ),
-});
+import BookViewerLoader from '@/components/BookViewerLoader';
 
 export default async function HomePage() {
   const t = await getTranslations('home');
@@ -19,7 +10,7 @@ export default async function HomePage() {
         {t('description')}
       </p>
       <section aria-label="Panorama Book">
-        <BookViewer />
+        <BookViewerLoader />
       </section>
     </div>
   );
