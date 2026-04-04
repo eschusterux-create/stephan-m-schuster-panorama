@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
@@ -30,7 +28,5 @@ export async function GET() {
   } catch (error) {
     console.error('Error fetching PDF:', error);
     return new NextResponse('Internal Server Error', { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

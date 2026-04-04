@@ -11,5 +11,11 @@
     "name": "Stephan Schuster",
     "websiteLabel": "Website",
     "emailLabel": "E-Mail"
+  },
+  "bookViewer": {
+    "loading": "Lädt…",
+    "error": "PDF konnte nicht geladen werden.",
+    "prev": "← Zurück",
+    "next": "Weiter →"
   }
 }

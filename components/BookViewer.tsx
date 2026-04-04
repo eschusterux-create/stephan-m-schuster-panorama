@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import HTMLFlipBook from 'react-pageflip';
+import { useTranslations } from 'next-intl';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 interface BookPageProps {
   pageNumber: number;
@@ -28,6 +29,7 @@ const BookPage = ({ pageNumber, width, pdfUrl }: BookPageProps) => (
 );
 
 export default function BookViewer() {
+  const t = useTranslations('bookViewer');
   const [numPages, setNumPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [pageWidth, setPageWidth] = useState<number>(400);
@@ -76,12 +78,12 @@ export default function BookViewer() {
         onLoadSuccess={onDocumentLoadSuccess}
         loading={
           <div className="flex items-center justify-center h-64 text-stone-400 text-sm">
-            Lädt…
+            {t('loading')}
           </div>
         }
         error={
           <div className="flex items-center justify-center h-64 text-stone-400 text-sm">
-            PDF konnte nicht geladen werden.
+            {t('error')}
           </div>
         }
       >
@@ -138,7 +140,7 @@ export default function BookViewer() {
               disabled={currentPage === 0}
               className="px-4 py-2 rounded border border-stone-300 hover:border-stone-500 hover:text-stone-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
-              ← Zurück
+            {t('prev')}
             </button>
             <span className="tabular-nums">
               {currentPage + 1} / {numPages}
@@ -148,7 +150,7 @@ export default function BookViewer() {
               disabled={currentPage >= numPages - 1}
               className="px-4 py-2 rounded border border-stone-300 hover:border-stone-500 hover:text-stone-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
-              Weiter →
+            {t('next')}
             </button>
           </div>
         </div>
