@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import dynamic from 'next/dynamic';
 
 const BookViewer = dynamic(() => import('@/components/BookViewer'), {
@@ -10,8 +10,8 @@ const BookViewer = dynamic(() => import('@/components/BookViewer'), {
   ),
 });
 
-export default function HomePage() {
-  const t = useTranslations('home');
+export default async function HomePage() {
+  const t = await getTranslations('home');
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-16 space-y-12">

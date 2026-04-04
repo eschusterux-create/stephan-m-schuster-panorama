@@ -1,18 +1,8 @@
 import { getRequestConfig } from 'next-intl/server';
-import { headers } from 'next/headers';
-
-const supportedLocales = ['de', 'en'] as const;
-type Locale = (typeof supportedLocales)[number];
-
-function isSupportedLocale(locale: string): locale is Locale {
-  return supportedLocales.includes(locale as Locale);
-}
 
 export default getRequestConfig(async () => {
-  // next-intl middleware sets x-default-locale; fall back to 'de'
-  const requestHeaders = headers();
-  const raw = requestHeaders.get('x-default-locale') ?? 'de';
-  const locale: Locale = isSupportedLocale(raw) ? raw : 'de';
+  // German is the primary locale; no URL-based locale switching.
+  const locale = 'de';
 
   return {
     locale,
