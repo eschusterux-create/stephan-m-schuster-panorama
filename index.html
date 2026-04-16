@@ -180,10 +180,17 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1rem; flex-wrap: wrap; }
+      nav { padding: 1rem 1rem; }
       nav .logo { font-size: 0.75rem; letter-spacing: 0.1em; }
       nav ul { gap: 1rem; }
       nav ul a { font-size: 0.75rem; }
+    }
+
+    @media (max-width: 370px) {
+      nav { align-items: flex-start; }
+      nav ul { align-items: flex-start; }
+      nav ul li { max-width: 72px; }
+      nav ul a { display: block; white-space: normal; word-wrap: break-word; }
     }
   </style>
 </head>
