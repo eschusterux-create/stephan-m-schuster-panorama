@@ -64,6 +64,7 @@
       opacity: 0.7;
       transition: opacity 0.2s;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     nav ul a:hover,
@@ -179,7 +180,10 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      nav ul { gap: 1.5rem; }
+      nav { padding: 1rem 1rem; }
+      nav .logo { font-size: 0.75rem; letter-spacing: 0.1em; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.75rem; white-space: nowrap; }
     }
   </style>
 </head>
@@ -230,8 +234,8 @@
 
     <h2 style="margin-top:2rem; margin-bottom:1rem; font-weight:400;">Kontakt:</h2>
     <p>Stephan M. Schuster<br>
-    Plänschweg 85<br>
-    D-81247 München<br>
+    Schloßstraße 8c<br>
+    85221 Dachau<br>
     mobil: <a href="tel:+491707926111" style="color:var(--text); text-decoration:none;">+49 170 7926111</a></p>
 
     <p>Contents: Stephan M. Schuster<br>
