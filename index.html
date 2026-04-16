@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stephan M. Schuster — Panorama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --text: #000000;
+      --muted: #555;
+      --border: #ddd;
+      --radius: 4px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Serif', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .logo {
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      cursor: pointer;
+    }
+
+    nav ul a:hover,
+    nav ul a.active { opacity: 1; }
+
+    /* ── Page sections ── */
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 8rem clamp(1.5rem, 5vw, 4rem) 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    #page-katalog {
+      max-width: 1100px;
+    }
+
+    .page.active { display: block; }
+
+    .page h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 2rem;
+    }
+
+    .page p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Slideshow ── */
+    .slideshow {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #f5f5f5;
+    }
+
+    .slideshow img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: opacity 0.5s ease;
+    }
+
+    .slideshow .slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.85);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #333;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: background 0.2s, transform 0.2s;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slideshow .slide-btn:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .slideshow .slide-btn.prev { left: 12px; }
+    .slideshow .slide-btn.next { right: 12px; }
+
+    .slideshow .slide-counter {
+      text-align: center;
+      padding: 0.75rem 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    footer a:hover {
+      color: var(--text);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav ul { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="logo" onclick="navigateTo('katalog')">Stephan M. Schuster</span>
+    <ul>
+      <li><a onclick="navigateTo('katalog')" id="nav-katalog">Katalog</a></li>
+      <li><a onclick="navigateTo('about')" id="nav-about">Über den Künstler</a></li>
+    </ul>
+  </nav>
+
+  <div class="page" id="page-katalog">
+    <h1>Stephan M. Schuster</h1>
+    <p style="font-size:1.1rem; letter-spacing:0.05em; color:var(--muted); margin-top:-1rem; margin-bottom:2.5rem;">Fine Art Photography</p>
+    <div class="slideshow" id="slideshow">
+      <img id="slide-img" src="pages/page-01.jpg" alt="Dachau Panorama – Seite 1" />
+      <button class="slide-btn prev" onclick="changeSlide(-1)" aria-label="Vorherige Seite">&#8249;</button>
+      <button class="slide-btn next" onclick="changeSlide(1)" aria-label="Nächste Seite">&#8250;</button>
+      <div class="slide-counter"><span id="slide-num">1</span> / 56</div>
+    </div>
+  </div>
+
+  <div class="page" id="page-about">
+    <h1>Über den Künstler</h1>
+    <p>Stephan M. Schuster ist ein Münchner Künstler und Fotograf. Zuvor war er als Gallerist tätig und hat zahlreiche Ausstellungen organisiert. Heute lebt und arbeitet er in Dachau.</p>
+
+    <img src="ftb8349.jpeg" alt="Stephan M. Schuster" style="width:100%; max-width:500px; display:block; margin:2rem 0; border-radius:4px;" />
+
+    <h2 style="margin-top:3rem; margin-bottom:1.5rem; font-weight:400;">Stephan M. Schuster</h2>
+    <ul style="list-style:none; padding:0; color:var(--text); line-height:2.2;">
+      <li><strong>1959</strong> geboren in München</li>
+      <li><strong>1979 – 1981</strong> Studium der Kunstgeschichte an der LMU München</li>
+      <li><strong>1981 – 1990</strong> Auswahl, Beschreibung und Schätzung von Kunstwerken des 15.-20. Jahrhunderts bei Karl &amp; Faber, München</li>
+      <li><strong>1991–1995</strong> Verifizierung und Verkauf von Kunst des 20. Jh. in verschiedenen Münchner Galerien in leitender Position</li>
+      <li><strong>1996–2008</strong> Kaufmann und Franchiseunternehmer</li>
+      <li><strong>seit 2008</strong> Freischaffender Fotokünstler</li>
+    </ul>
+
+    <h2 style="margin-top:3rem; margin-bottom:1.5rem; font-weight:400;">Kontakt</h2>
+    <p>Telefon: <a href="tel:+491707926111" style="color:var(--text); text-decoration:none;">+49 170 7926111</a><br>
+    E-Mail: <a href="mailto:mail@stephan-schuster.de" style="color:var(--text); text-decoration:none;">mail@stephan-schuster.de</a></p>
+  </div>
+
+  <div class="page" id="page-imprint">
+    <h1>Impressum</h1>
+
+    <h2 style="margin-top:2rem; margin-bottom:1rem; font-weight:400;">Kontakt:</h2>
+    <p>Stephan M. Schuster<br>
+    Plänschweg 85<br>
+    D-81247 München<br>
+    mobil: <a href="tel:+491707926111" style="color:var(--text); text-decoration:none;">+49 170 7926111</a></p>
+
+    <p>Contents: Stephan M. Schuster<br>
+    Email: <a href="mailto:mail@stephan-schuster.de" style="color:var(--text); text-decoration:none;">mail@stephan-schuster.de</a></p>
+
+    <p>website und rendering gallery-image by: <a href="https://www.tomberner.com" target="_blank" rel="noopener" style="color:var(--text);">www.tomberner.com</a></p>
+
+    <h2 style="margin-top:2rem; margin-bottom:1rem; font-weight:400;">Disclaimer:</h2>
+    <ul style="list-style:disc; padding-left:1.5rem; line-height:1.8;">
+      <li style="margin-bottom:1rem;">Haftungsbeschränkung für eigene Inhalte: Alle Inhalte unseres Internetauftritts wurden mit Sorgfalt und nach bestem Gewissen erstellt. Eine Gewähr für die Aktualität, Vollständigkeit und Richtigkeit sämtlicher Seiten kann jedoch nicht übernommen werden. Gemäß § 7 Abs. 1 TMG sind wir als Dienstanbieter für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich, nach den §§ 8 bis 10 TMG jedoch nicht verpflichtet, die übermittelten oder gespeicherten fremden Informationen zu überwachen. Eine umgehende Entfernung dieser Inhalte erfolgt ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung und wir haften nicht vor dem Zeitpunkt der Kenntniserlangung.</li>
+      <li style="margin-bottom:1rem;">Haftungsbeschränkung für externe Links: Unsere Webseite enthält sog. externe Links (Verknüpfungen zu Webseiten Dritter), auf deren Inhalt wir keinen Einfluss haben und für den wir aus diesem Grund keine Gewähr übernehmen. Für die Inhalte und Richtigkeit der Informationen ist der jeweilige Informationsanbieter der verlinkten Webseite verantwortlich. Als die Verlinkung vorgenommen wurde, waren für uns keine Rechtsverstöße erkennbar. Sollte uns eine Rechtsverletzung bekannt werden, wird der jeweilige Link umgehend von uns entfernt.</li>
+      <li style="margin-bottom:1rem;">Urheberrecht: Die auf dieser Webseite veröffentlichten Inhalte und Werke unterliegen dem deutschen Urheberrecht. Jede Art der Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung des jeweiligen Urhebers bzw. Autors.</li>
+      <li style="margin-bottom:1rem;">Datenschutz: Durch den Besuch unseres Internetauftritts können Informationen über den Zugriff (Datum, Uhrzeit, aufgerufene Seite) auf dem Server gespeichert werden. Dies stellt keine Auswertung personenbezogener Daten (z.B. Name, Anschrift oder E-Mail Adresse) dar. Sofern personenbezogene Daten erhoben werden, erfolgt dies sofern möglich nur mit dem vorherigen Einverständnis des Nutzers der Webseite. Eine Weiterleitung der Daten an Dritte findet ohne ausdrückliche Zustimmung des Nutzers nicht statt. Wir weisen ausdrücklich darauf hin, dass die Übertragung von Daten im Internet (z.B. per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff Dritter kann nicht gewährleistet werden. Wir können keine Haftung für die durch solche Sicherheitslücken entstehenden Schäden übernehmen. Der Verwendung veröffentlichter Kontaktdaten durch Dritte zum Zwecke von Werbung wird ausdrücklich widersprochen. Wir behalten uns rechtliche Schritte für den Fall der unverlangten Zusendung von Werbeinformationen vor.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Stephan M. Schuster</p>
+    <a onclick="navigateTo('imprint')" style="cursor:pointer;">Impressum</a>
+  </footer>
+
+  <script>
+    function navigateTo(slug) {
+      document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('nav ul a').forEach(function(a) { a.classList.remove('active'); });
+      var page = document.getElementById('page-' + slug);
+      var link = document.getElementById('nav-' + slug);
+      if (page) page.classList.add('active');
+      if (link) link.classList.add('active');
+      window.location.hash = slug;
+      window.scrollTo(0, 0);
+    }
+
+    function handleHash() {
+      var hash = window.location.hash.replace('#', '');
+      if (hash === 'about') {
+        navigateTo('about');
+      } else if (hash === 'imprint') {
+        navigateTo('imprint');
+      } else {
+        navigateTo('katalog');
+      }
+    }
+
+    /* ── Slideshow ── */
+    var currentSlide = 1;
+    var totalSlides = 56;
+    var slideImg = document.getElementById('slide-img');
+    var slideNum = document.getElementById('slide-num');
+    var isTransitioning = false;
+
+    function changeSlide(dir) {
+      if (isTransitioning) return;
+      var next = currentSlide + dir;
+      if (next < 1 || next > totalSlides) return;
+      isTransitioning = true;
+      slideImg.style.opacity = '0';
+      setTimeout(function() {
+        currentSlide = next;
+        var pad = currentSlide < 10 ? '0' + currentSlide : '' + currentSlide;
+        slideImg.src = 'pages/page-' + pad + '.jpg';
+        slideImg.alt = 'Dachau Panorama – Seite ' + currentSlide;
+        slideNum.textContent = currentSlide;
+        slideImg.style.opacity = '1';
+        isTransitioning = false;
+      }, 350);
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('page-katalog').classList.contains('active')) {
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+        if (e.key === 'ArrowRight') changeSlide(1);
+      }
+    });
+
+    window.addEventListener('hashchange', handleHash);
+    handleHash();
+  </script>
+</body>
+</html>
